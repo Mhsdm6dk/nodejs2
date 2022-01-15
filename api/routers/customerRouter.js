@@ -1,0 +1,12 @@
+const express=require('express');
+const customerController = require('../controllers/customerController');
+const authenticateMiddleware = require('../middleware/authenticateMiddleware');
+const router=express.Router();
+router.post('/login',customerController.login);
+router.get('/logout',customerController.logout);
+router.get('/',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,customerController.get);
+router.post('/',customerController.post);
+router.patch('/handleInformation',authenticateMiddleware.verifyToken,customerController.handleInfomation);
+router.patch('/handlePassword',authenticateMiddleware.verifyToken,customerController.handlePassword);
+router.delete('/',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,customerController.delete);
+module.exports=router;
