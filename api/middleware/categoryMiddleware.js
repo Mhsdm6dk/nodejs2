@@ -1,6 +1,8 @@
+const joi=require('joi');
 class CategoryMiddleware{
     post(req,res,next){
-        if(req.body.name){
+        const validate=joi.string().max(100).min(1);
+        if(req.body.name && !validate.error){
             next();
         }
         else{
