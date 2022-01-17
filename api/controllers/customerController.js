@@ -48,16 +48,20 @@ class CustomerController{
     async post(req,res){
         try{
             const pass=crypto.AES.encrypt(req.body.password,process.env.CRYPTO_SECRET).toString();
-            const user=await customerModel.create({
-                username: req.body.username,
-                password:pass,
-                name:'trong',
-                email:'trong',
-                address:'trong',
-                admin:0,
-                telephone:'trong'
-            })
-            res.json({succes:true, message:'create account successfully!'});
+            const userlist=await customerModel.find({username:req.body.username});
+            if(userlist.length==0){
+                const user=await customerModel.create({
+                    username: req.body.username,
+                    password:pass,
+                    name:'trong',
+                    email:'trong',
+                    address:'trong',
+                    admin:0,
+                    telephone:'trong'
+                })
+                return res.json({succes:true, message:'create account successfully!'});
+            }
+            return res.json({success:false,message:'tai khoan da ton tai'});
         }
         catch(err){
             console.log(err);

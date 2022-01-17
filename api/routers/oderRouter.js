@@ -1,0 +1,11 @@
+const express=require('express');
+const oderController = require('../controllers/oderController');
+const authenticateMiddleware = require('../middleware/authenticateMiddleware');
+const router=express.Router();
+router.get('/all',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderController.getall);
+router.get('/',authenticateMiddleware.verifyToken,oderController.get);
+router.post('/',authenticateMiddleware.verifyToken,oderController.post);
+router.put('/:_id',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderController.put);
+router.delete('/',authenticateMiddleware.verifyToken,oderController.delete);
+router.delete('/admindelete',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderController.admindelete);
+module.exports=router;
