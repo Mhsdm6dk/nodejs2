@@ -2,6 +2,7 @@ const customerModel = require("../models/customerModel");
 require('dotenv').config();
 const crypto=require('crypto-js');
 const jwt=require('jsonwebtoken');
+const oderModel = require("../models/oderModels");
 class CustomerController{
     async login(req,res){
         try{
@@ -12,23 +13,23 @@ class CustomerController{
                 const token=jwt.sign({
                     _id:user._id
                 },process.env.TOKEN_SECRET,{
-                    expiresIn:'15m'
+                    expiresIn:'45m'
                 });
                 res.cookie('token',token);
-                res.json({
+                res.json({success:true,data:{
                     name:user.name,
                     address:user.address,
                     telephone:user.telephone,
                     email:user.email,
                     admin:user.admin
-                })
+                }})
             }
             else{
-                res.status(404).json({succes:false,message:'account not found'});
+                res.status(400).json({succes:false,message:'password is not correct'});
             }
         }
         catch(err){
-            res.status(500).json({succes:false,message:'loi server'});
+            res.status(404).json({succes:false,message:'account not found!'});
         }
         
     }
@@ -99,8 +100,9 @@ class CustomerController{
     }
     async delete(req,res){
         try {
-            const user= await customerModel.deleteOne({username:req.body.username});
-            if(user.deletedCount){
+            const oder=await oderModel.deleteMany({customer:req.params._id});
+            const user= await customerModel.deleteOne({_id:req.params._id});
+            if(user.deletedCount && oder.deletedCount){
                 res.json('succes');
             }
             else{

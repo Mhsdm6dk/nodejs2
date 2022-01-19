@@ -1,8 +1,11 @@
 const joi=require('joi');
 class CategoryMiddleware{
     post(req,res,next){
-        const validate=joi.string().max(100).min(1);
-        if(req.body.name && !validate.error){
+        const schema=joi.object({
+            name:joi.string().min(1).max(50).exist()
+        });
+        const validate=schema.validate(req.body)
+        if(!validate.error){
             next();
         }
         else{

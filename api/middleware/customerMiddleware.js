@@ -26,7 +26,7 @@ class CustomerMiddleware{
         }
     }
     handleInfo(req,res,next){
-        const chema=join.object({
+        const schema=joi.object({
             name:joi.string().min(4).max(50).exist(),
             telephone:joi.string().regex(/^[0-9]+$/).min(4).max(30).exist(),
             email:joi.string().min(4).max(30).exist(),

@@ -3,7 +3,7 @@ const oderSchema=new mongoose.Schema({
     telephone:String,
     address:String,
     cost:Number,
-    oder_date:Date,
+    oder_date:String,
     oder_list:[{item:{
         type:mongoose.Schema.ObjectId,
         ref:"item"

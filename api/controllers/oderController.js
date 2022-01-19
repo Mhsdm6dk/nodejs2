@@ -5,7 +5,8 @@ class OderController{
     async getall(req,res){
         try{
             const oderlist= await oderModel.find({})
-            .populate("item");
+            .populate("oder_list.item",["_id","name","image","price","sale"])
+            .populate("customer");
             res.json({success:true,data:oderlist});
         }
         catch(err){
@@ -15,7 +16,7 @@ class OderController{
     async get(req,res){
         try{
             const oderlist=await oderModel.find({customer:req._id})
-            .populate("oder_list.item")
+            .populate("oder_list.item",["_id","name","image","price","sale"])
             res.json({success:true, data:oderlist})
         }
         catch(err){
@@ -45,8 +46,7 @@ class OderController{
                 address:req.body.address,
                 cost:req.body.cost,
                 oder_date:req.body.oder_date,
-                oder_list:req.body.oder_list,
-                customer:req.body.customer
+                oder_list:req.body.oder_list
             })
             res.json(req.body)
         }
@@ -57,7 +57,7 @@ class OderController{
 
     async delete(req,res){
         try{
-            const oder=await oderModel.deleteOne({customer:req._id})
+            const oder=await oderModel.deleteOne({_id:req.params._id,customer:req._id})
             if(oder.deletedCount){
                 res.json("delete successfully!")
             }

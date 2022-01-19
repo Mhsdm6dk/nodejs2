@@ -7,6 +7,6 @@ router.get('/all',authenticateMiddleware.verifyToken,authenticateMiddleware.auth
 router.get('/',authenticateMiddleware.verifyToken,oderController.get);
 router.post('/',authenticateMiddleware.verifyToken,oderMiddleware.postandput,oderController.post);
 router.put('/:_id',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderMiddleware.postandput,oderController.put);
-router.delete('/',authenticateMiddleware.verifyToken,oderController.delete);
-router.delete('/admindelete',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderController.admindelete);
+router.delete('/:_id',authenticateMiddleware.verifyToken,oderController.delete);
+router.delete('/admindelete/:_id',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,oderController.admindelete);
 module.exports=router;

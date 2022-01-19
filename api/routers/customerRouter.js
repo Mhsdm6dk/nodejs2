@@ -9,5 +9,5 @@ router.get('/',authenticateMiddleware.verifyToken,authenticateMiddleware.authenA
 router.post('/',customerMiddleware.post,customerController.post);
 router.patch('/handleInformation',authenticateMiddleware.verifyToken,customerMiddleware.handleInfo,customerController.handleInfomation);
 router.patch('/handlePassword',authenticateMiddleware.verifyToken,customerMiddleware.handlePassword,customerController.handlePassword);
-router.delete('/',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,customerController.delete);
+router.delete('/:_id',authenticateMiddleware.verifyToken,authenticateMiddleware.authenAdmin,customerController.delete);
 module.exports=router;
