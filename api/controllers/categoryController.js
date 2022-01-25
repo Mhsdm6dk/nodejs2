@@ -14,7 +14,8 @@ class CategoryController{
     async post(req,res){
         try{
             const item= await categoryModel.create({
-                name:req.body.name
+                name:req.body.name,
+                image:req.body.image
             })
             res.json(item);
         }
@@ -28,7 +29,8 @@ class CategoryController{
             const item=await categoryModel.updateOne({
                 _id:req.params._id
             },{
-                name:req.body.name
+                name:req.body.name,
+                image:req.body.image
             })
             res.status(200).json(req.body);
         }
